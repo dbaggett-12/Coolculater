@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Coolculater</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="title">
+        The Coolculator lmao
+    </div>
+    <div class="superContainer">
+        <div class="calculatorContainer">
+            <div class="numberDisplay" id="numberDisplay">
+                1337
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+let firstNumber = 0;
+
+let secondNumber = 0;
+
+function getOperator() {
+    const operator = prompt("What operator?");
+    if (operator === "+") {
+            add();
+        } else if (operator === "-") {
+            subtract();
+        } else if (operator === "*") {
+            multiply();
+        } else if (operator === "/") {
+            divide();
+        }   else {
+            alert("Please type +, -, *, or /");
+            getOperator();
+        }
+}
+
+function getFirstNumber() {
+    firstNumber = parseFloat(prompt("First number?"));
+    console.log(firstNumber);
+    return firstNumber;
+}
+
+function getSecondNumber() {
+    secondNumber = parseFloat(prompt("Second number?"));
+    console.log(secondNumber);
+    return secondNumber;
+}
+
+function add() {
+    const result = (firstNumber + secondNumber);
+    console.log(result);
+}
+function subtract() {
+    const result = (firstNumber - secondNumber);
+    console.log(result);
+}
+function multiply() {
+    const result = (firstNumber * secondNumber);
+    console.log(result);
+}
+function divide() {
+    const result = (firstNumber / secondNumber);
+    console.log(result);
+}
+
+//getFirstNumber();
+//getSecondNumber();
+//getOperator();
+
+
+
+
+</script>
+</html>

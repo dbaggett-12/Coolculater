@@ -1,0 +1,40 @@
+html {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    padding: 50px;
+}
+
+.superContainer {
+    display: flex;
+    padding: 40px;
+    justify-content:center;
+    align-items: center;
+}
+
+.calculatorContainer {
+    display: flex;
+    flex-direction: column;
+    border: solid black 5px;
+    border-radius: 18px;
+    height: 700px;
+    width: 300px;
+
+}
+
+.numberDisplay {
+    display: flex;
+    border: solid black 5px;
+    border-radius: 18px;
+    margin: 10px;
+    justify-content: right;
+    align-items: center;
+    height: 50px;
+}
