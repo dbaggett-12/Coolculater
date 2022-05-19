@@ -11,19 +11,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="title">
-        The Coolculator lmao
+<div id="alphaContainer">
+    <div class="title" id="title">
+        The Coolculator
     </div>
-    <div class="superContainer">
-        <!-- <div id="currentDisplay">Current Display</div>
-        <div id="operatorActive">Operator Active?</div>
-
-        <div data-previous-number class="previousNumber"></div>
-        <div data-current-number class="currentNumber"></div>         -->
-
-
-
-        <div class="calculatorContainer">
+    <div class="superContainer" id="superContainer">
+        <div class="calculatorContainer" id="calculatorContainer">
             <div class="memeHeading">I'm breakin a sweat!</div>
             <div class="numberDisplay" id="numberDisplay">
                 0
@@ -65,6 +58,7 @@
             </div>
         </div>
     </div>
+</div>
 </body>
 
 <script>
@@ -76,7 +70,11 @@ let fixedResult='';
 let currentDisplay;
 let operatorActive = false;
 let currentOperator;
-let answer;
+let buildUpAudio = new Audio('Reveal Sound Effect.mp3');
+let jumpAudio = new Audio('jump.mp3');
+let popAudio = new Audio('pop.mp3');
+let paperAudio = new Audio('paper.mp3');
+let buttonAudio = new Audio('button.mp3');
 
 
 const numberDisplay = document.getElementById("numberDisplay");
@@ -84,23 +82,25 @@ const numberButtons = document.querySelectorAll('[number-button]');
 const operatorButtons = document.querySelectorAll('[operator-button]');
 const resetButton = document.getElementById("clearButton");
 const equalsButton = document.getElementById("equalsButton");
-const currentDisplayTracker = document.getElementById("currentDisplay");
-const operatorTrueFalseTracker = document.getElementById("operatorActive");
+const decimalButton = document.getElementById("numberDecimal");
+const calculatorContainer = document.getElementById("calculatorContainer");
+const alphaContainer = document.getElementById("alphaContainer");
+const superContainer = document.getElementById("superContainer");
+const memeHeading = document.getElementById("title");
 
 numberButtons.forEach(button => {
   button.addEventListener('click', () => {
     if (operatorActive == false) {
         currentDisplay = "previousNumber";
         previousNumber += button.innerHTML;
-        console.log(previousNumber);
         displayUpdate();
     }
     else if (operatorActive == true) {
         currentDisplay = "currentNumber";
         currentNumber += button.innerHTML;
-        console.log(currentNumber);
-        displayUpdate();
+        displayUpdate();        
     }
+    buttonAudio.play();
   })
 })
 
@@ -121,14 +121,29 @@ operatorButtons.forEach(button => {
                 divide();
             }
         }
+        buttonAudio.play();
         operatorActive = true;
         currentOperator = button.innerHTML;
-        console.log("The current operator is " + currentOperator);
         displayUpdate();
     });
 });
 
+decimalButton.addEventListener("click", () => {
+    if (operatorActive == false) {
+        currentDisplay = "previousNumber";
+        previousNumber += button.innerHTML;
+        displayUpdate();
+    }
+    else if (operatorActive == true) {
+        currentDisplay = "currentNumber";
+        currentNumber += button.innerHTML;
+        displayUpdate();        
+    }
+    buttonAudio.play();
+})
+
 resetButton.addEventListener("click", () => {
+    paperAudio.play();
     previousNumber = 0;
     currentNumber = 0;
     result = 0;
@@ -138,6 +153,7 @@ resetButton.addEventListener("click", () => {
 })
 
 equalsButton.addEventListener('click', () => {
+    popAudio.play();
     previousNumber = parseInt(previousNumber);
     currentNumber = parseInt(currentNumber);
     currentDisplay = "answerDisplay";
@@ -167,12 +183,14 @@ function displayUpdate() {
         previousNumber = +fixedResult.toFixed(9);
         currentNumber = '';
     }
-    fixedResult = +fixedResult.toFixed(9);
-    numberDisplay.innerHTML = fixedResult;
+    console.log(fixedResult);
 
-    currentDisplayTracker.innerHTML = currentDisplay;
-    operatorTrueFalseTracker.innerHTML = operatorActive;
-   
+    if (fixedResult == Infinity) {
+        shouldntHaveDoneThat();
+    } else {
+        fixedResult = +fixedResult.toFixed(9);
+        numberDisplay.innerHTML = fixedResult;
+    }
 }
 
 function add() {
@@ -192,6 +210,20 @@ function multiply() {
 function divide() {
     result = (previousNumber / currentNumber);
     displayUpdate();
+}
+
+function shouldntHaveDoneThat() {
+    jumpAudio.play();
+    //buildUpAudio.play();
+    calculatorContainer.remove();
+    superContainer.remove();
+    alphaContainer.style.backgroundColor = "black";
+    memeHeading.innerHTML = ("y̵͓̐̈̚ ̵̛̲͓̀͑ơ̴͈͉̌͐̕ ̷̰̫̼̕ͅu̴͖̮̔́ ̷̨̫̘͇̽ ̴̠̦̘̆̓̀s̷̤̐̔̈͠ ̶͍̦̗͆̅h̴̩͒̄͑͠ ̸͉̺̘͎̓̀̂́ȏ̶̹̦̩͘ ̸̜͐͜ǔ̶̡̠̳͖ ̵̢͍̺͛̀l̶̲̔̈́̋͝ ̴͗́̾̔͜d̵͍̦͎͌͗̈́͜ ̵͎͓̗̟̂n̵͇̩̔̎̌̆ ̶͓͎͔̅͗̇̃t̶̨͚̊̆̕ ̴̨̘̈͌ ̷̮̫̐͊h̴̺͌ ̵̙͉̟̖͋å̶̡̖̻͗̉ ̴̟̣̥̈́̓̌͠v̸̠̍ ̵͙̻͓́͊͘è̷̙͐͑ ̶͎͔̺͎͌͊͆͠ ̷̥̗̈́́͒d̷̨̰̭͔͋̿ ̸͇̈́̚ŏ̵͖̥̝̞͑ ̵̭̪̰̯̃ǹ̴̨͙̻̗ ̸̥̘̎͗ͅė̸̥̻͓͔̐̀ ̸̗͖̼̱͘͠ ̴̧͕̜͒̑t̷͇͙͈͘ ̴̳̊͑h̵̝̯͗ ̶̬̪̒͗̓a̶̮̤̥̎́̓ ̶̧͐̂ţ̴̨̪̰̝̦̟͇̳̬̣̣̮͐̓̿͐́̐̔͐̿́̆̽̽̉͜͝");
+    alphaContainer.style.display = "flex";
+    alphaContainer.style.justifyContent = "center";
+    alphaContainer.style.alignItems = "center";
+    memeHeading.style.color = "white";
+    memeHeading.style.fontSize = "50px";
 }
 
 </script>
