@@ -15,16 +15,16 @@
         The Coolculator lmao
     </div>
     <div class="superContainer">
-        <div id="currentDisplay">Current Display</div>
+        <!-- <div id="currentDisplay">Current Display</div>
         <div id="operatorActive">Operator Active?</div>
 
-        <!--<div data-previous-number class="previousNumber"></div>
+        <div data-previous-number class="previousNumber"></div>
         <div data-current-number class="currentNumber"></div>         -->
 
 
 
         <div class="calculatorContainer">
-            <div class="memeHeading">Come on...do math!</div>
+            <div class="memeHeading">I'm breakin a sweat!</div>
             <div class="numberDisplay" id="numberDisplay">
                 0
             </div>
@@ -47,6 +47,10 @@
                     <button number-button type="button" class="numberButton" id="numberSeven">7</button>
                     <button number-button type="button" class="numberButton" id="numberEight">8</button>
                     <button number-button type="button" class="numberButton" id="numberNine">9</button>
+                </div>
+                <div class="fourthRow">
+                    <button number-button type="button" class="numberButton" id="numberZero">0</button>
+                    <button number-button type="button" class="numberButton" id="numberDecimal">.</button>
                 </div>
             </div>
             <div class="operatorContainer">
@@ -80,7 +84,6 @@ const numberButtons = document.querySelectorAll('[number-button]');
 const operatorButtons = document.querySelectorAll('[operator-button]');
 const resetButton = document.getElementById("clearButton");
 const equalsButton = document.getElementById("equalsButton");
-
 const currentDisplayTracker = document.getElementById("currentDisplay");
 const operatorTrueFalseTracker = document.getElementById("operatorActive");
 
@@ -103,12 +106,27 @@ numberButtons.forEach(button => {
 
 operatorButtons.forEach(button => {
     button.addEventListener('click', () => {
+        if (operatorActive == true) {
+            previousNumber = parseInt(previousNumber);
+            currentNumber = parseInt(currentNumber);
+            currentDisplay = "answerDisplay";
+            operatorActive = false;
+            if (currentOperator === "+") {
+                add();
+            } else if (currentOperator === "-") {
+                subtract();
+            } else if (currentOperator === "*") {
+                multiply();
+            } else {
+                divide();
+            }
+        }
         operatorActive = true;
         currentOperator = button.innerHTML;
         console.log("The current operator is " + currentOperator);
         displayUpdate();
-    })
-})
+    });
+});
 
 resetButton.addEventListener("click", () => {
     previousNumber = 0;
@@ -123,6 +141,7 @@ equalsButton.addEventListener('click', () => {
     previousNumber = parseInt(previousNumber);
     currentNumber = parseInt(currentNumber);
     currentDisplay = "answerDisplay";
+    operatorActive = false;
     if (currentOperator === "+") {
         add();
     } else if (currentOperator === "-") {
@@ -146,7 +165,6 @@ function displayUpdate() {
     } else if (currentDisplay === "answerDisplay") {
         fixedResult = result;
         previousNumber = +fixedResult.toFixed(9);
-        operatorActive = false;
         currentNumber = '';
     }
     fixedResult = +fixedResult.toFixed(9);
@@ -175,95 +193,6 @@ function divide() {
     result = (previousNumber / currentNumber);
     displayUpdate();
 }
-
-
-
-
-
-//                        THIS WAS LINE 77, FROM THE WEBSITE
-/**  const previousNumberTextElement = document.querySelector("data-previous-number");
-const currentNumberTextElement = document.querySelector("data-current-number");
-
-
-class Calculator {
-    constructor(previousNumberTextElement, currentNumberTextElement) {
-        this.previousNumberTextElement = previousNumberTextElement;
-        this.currentNumberTextElement = currentNumberTextElement;
-    }
-}
-
-const calculator = new Calculator(previousNumberTextElement, currentNumberTextElement);
-
-
-function ready() {
-    getpreviousNumber();
-    getcurrentNumber();
-    getOperator();
-}
-
-function getOperator() {
-    const operator = prompt("What operator?");
-    if (operator === "+") {
-            add();
-        } else if (operator === "-") {
-            subtract();
-        } else if (operator === "*") {
-            multiply();
-        } else if (operator === "/") {
-            divide();
-        }   else {
-            alert("Please type +, -, *, or /");
-            getOperator();
-        }
-}
-
-**/
-
-
-
-
-
-
-//                        ORIGINAL MATH FUNCTIONS
-/** 
- * 
- * 
- * 
- * 
- * 
- * let calculator = {
-    previousOperand: previousNumber,
-    currentOperand: currentNumber,
-    operator: currentOperator,
-}
- * 
- * 
- * 
- * 
- * 
- * function getpreviousNumber() {
-    previousNumber = parseFloat(prompt("First number?"));
-    console.log(previousNumber);
-    return previousNumber;
-}
-
-function getcurrentNumber() {
-    currentNumber = parseFloat(prompt("Second number?"));
-    console.log(currentNumber);
-    return currentNumber;
-}
-
-
-
-
-
-
-
-
-**/
-
-
-
 
 </script>
 </html>
