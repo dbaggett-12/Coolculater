@@ -52,7 +52,7 @@ html {
     font-weight: 900;
 }
 
-.button, .numberButton {
+.button, .numberButton, .input {
     transition-duration: 0.2s;
 }
 
@@ -105,4 +105,8 @@ html {
     width: 80%;
     font-weight: 600;
     font-size: larger;
+}
+
+#currentDisplay, #operatorActive {
+    margin: 10px;
 }

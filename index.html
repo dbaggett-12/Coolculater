@@ -15,6 +15,14 @@
         The Coolculator lmao
     </div>
     <div class="superContainer">
+        <div id="currentDisplay">Current Display</div>
+        <div id="operatorActive">Operator Active?</div>
+
+        <!--<div data-previous-number class="previousNumber"></div>
+        <div data-current-number class="currentNumber"></div>         -->
+
+
+
         <div class="calculatorContainer">
             <div class="memeHeading">Come on...do math!</div>
             <div class="numberDisplay" id="numberDisplay">
@@ -26,29 +34,29 @@
             </div>
             <div class="numberButtonsContainer">
                 <div class="firstRow">
-                    <button type="button" class="numberButton">1</button>
-                    <button type="button" class="numberButton">2</button>
-                    <button type="button" class="numberButton">3</button>
+                    <button number-button type="button" class="numberButton" id="numberOne">1</button>
+                    <button number-button type="button" class="numberButton" id="numberTwo">2</button>
+                    <button number-button type="button" class="numberButton" id="numberThree">3</button>
                 </div>
                 <div class="secondRow">
-                    <button type="button" class="numberButton">4</button>
-                    <button type="button" class="numberButton">5</button>
-                    <button type="button" class="numberButton">6</button>
+                    <button number-button type="button" class="numberButton" id="numberFour">4</button>
+                    <button number-button type="button" class="numberButton" id="numberFive">5</button>
+                    <button number-button type="button" class="numberButton" id="numberSix">6</button>
                 </div>
                 <div class="thirdRow">
-                    <button type="button" class="numberButton">7</button>
-                    <button type="button" class="numberButton">8</button>
-                    <button type="button" class="numberButton">9</button>
+                    <button number-button type="button" class="numberButton" id="numberSeven">7</button>
+                    <button number-button type="button" class="numberButton" id="numberEight">8</button>
+                    <button number-button type="button" class="numberButton" id="numberNine">9</button>
                 </div>
             </div>
             <div class="operatorContainer">
                 <div class="opFirstRow">
-                    <button type="button" class="operatorButton">+</button>
-                    <button type="button" class="operatorButton">-</button>
+                    <button operator-button type="button" class="operatorButton">+</button>
+                    <button operator-button type="button" class="operatorButton">-</button>
                 </div>
                 <div class="opSecondRow">
-                    <button type="button" class="operatorButton">*</button>
-                    <button type="button" class="operatorButton">/</button>
+                    <button operator-button type="button" class="operatorButton">*</button>
+                    <button operator-button type="button" class="operatorButton">/</button>
                 </div>
             </div>
         </div>
@@ -56,9 +64,139 @@
 </body>
 
 <script>
-let firstNumber = 0;
 
-let secondNumber = 0;
+let previousNumber='';
+let currentNumber='';
+let result='';
+let fixedResult='';
+let currentDisplay;
+let operatorActive = false;
+let currentOperator;
+let answer;
+
+
+const numberDisplay = document.getElementById("numberDisplay");
+const numberButtons = document.querySelectorAll('[number-button]');
+const operatorButtons = document.querySelectorAll('[operator-button]');
+const resetButton = document.getElementById("clearButton");
+const equalsButton = document.getElementById("equalsButton");
+
+const currentDisplayTracker = document.getElementById("currentDisplay");
+const operatorTrueFalseTracker = document.getElementById("operatorActive");
+
+numberButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    if (operatorActive == false) {
+        currentDisplay = "previousNumber";
+        previousNumber += button.innerHTML;
+        console.log(previousNumber);
+        displayUpdate();
+    }
+    else if (operatorActive == true) {
+        currentDisplay = "currentNumber";
+        currentNumber += button.innerHTML;
+        console.log(currentNumber);
+        displayUpdate();
+    }
+  })
+})
+
+operatorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        operatorActive = true;
+        currentOperator = button.innerHTML;
+        console.log("The current operator is " + currentOperator);
+        displayUpdate();
+    })
+})
+
+resetButton.addEventListener("click", () => {
+    previousNumber = 0;
+    currentNumber = 0;
+    result = 0;
+    currentDisplay = "previousNumber";
+    operatorActive = false;
+    displayUpdate();
+})
+
+equalsButton.addEventListener('click', () => {
+    previousNumber = parseInt(previousNumber);
+    currentNumber = parseInt(currentNumber);
+    currentDisplay = "answerDisplay";
+    if (currentOperator === "+") {
+        add();
+    } else if (currentOperator === "-") {
+        subtract();
+    } else if (currentOperator === "*") {
+        multiply();
+    } else {
+        divide();
+    }
+
+});
+
+function displayUpdate() {
+    if (currentDisplay === "previousNumber") {
+        previousNumber=parseInt(previousNumber);
+        fixedResult = +previousNumber.toFixed(9);
+    }
+    else if (currentDisplay === "currentNumber") {
+        currentNumber=parseInt(currentNumber);
+        fixedResult = +currentNumber.toFixed(9);
+    } else if (currentDisplay === "answerDisplay") {
+        fixedResult = result;
+    }
+    fixedResult = +fixedResult.toFixed(9);
+    numberDisplay.innerHTML = fixedResult;
+
+    currentDisplayTracker.innerHTML = currentDisplay;
+    operatorTrueFalseTracker.innerHTML = operatorActive;
+   
+}
+
+function add() {
+    result = (previousNumber + currentNumber);
+    displayUpdate();
+}
+function subtract() {
+    result = (previousNumber - currentNumber);
+    displayUpdate();
+
+}
+function multiply() {
+    result = (previousNumber * currentNumber);
+    displayUpdate();
+
+}
+function divide() {
+    result = (previousNumber / currentNumber);
+    displayUpdate();
+}
+
+
+
+
+
+//                        THIS WAS LINE 77, FROM THE WEBSITE
+/**  const previousNumberTextElement = document.querySelector("data-previous-number");
+const currentNumberTextElement = document.querySelector("data-current-number");
+
+
+class Calculator {
+    constructor(previousNumberTextElement, currentNumberTextElement) {
+        this.previousNumberTextElement = previousNumberTextElement;
+        this.currentNumberTextElement = currentNumberTextElement;
+    }
+}
+
+const calculator = new Calculator(previousNumberTextElement, currentNumberTextElement);
+
+
+function ready() {
+    getpreviousNumber();
+    getcurrentNumber();
+    getOperator();
+}
 
 function getOperator() {
     const operator = prompt("What operator?");
@@ -76,38 +214,50 @@ function getOperator() {
         }
 }
 
-function getFirstNumber() {
-    firstNumber = parseFloat(prompt("First number?"));
-    console.log(firstNumber);
-    return firstNumber;
+**/
+
+
+
+
+
+
+//                        ORIGINAL MATH FUNCTIONS
+/** 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * let calculator = {
+    previousOperand: previousNumber,
+    currentOperand: currentNumber,
+    operator: currentOperator,
+}
+ * 
+ * 
+ * 
+ * 
+ * 
+ * function getpreviousNumber() {
+    previousNumber = parseFloat(prompt("First number?"));
+    console.log(previousNumber);
+    return previousNumber;
 }
 
-function getSecondNumber() {
-    secondNumber = parseFloat(prompt("Second number?"));
-    console.log(secondNumber);
-    return secondNumber;
+function getcurrentNumber() {
+    currentNumber = parseFloat(prompt("Second number?"));
+    console.log(currentNumber);
+    return currentNumber;
 }
 
-function add() {
-    const result = (firstNumber + secondNumber);
-    console.log(result);
-}
-function subtract() {
-    const result = (firstNumber - secondNumber);
-    console.log(result);
-}
-function multiply() {
-    const result = (firstNumber * secondNumber);
-    console.log(result);
-}
-function divide() {
-    const result = (firstNumber / secondNumber);
-    console.log(result);
-}
 
-getFirstNumber();
-getSecondNumber();
-getOperator();
+
+
+
+
+
+
+**/
 
 
 
