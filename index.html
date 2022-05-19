@@ -145,6 +145,9 @@ function displayUpdate() {
         fixedResult = +currentNumber.toFixed(9);
     } else if (currentDisplay === "answerDisplay") {
         fixedResult = result;
+        previousNumber = +fixedResult.toFixed(9);
+        operatorActive = false;
+        currentNumber = '';
     }
     fixedResult = +fixedResult.toFixed(9);
     numberDisplay.innerHTML = fixedResult;
