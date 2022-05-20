@@ -70,7 +70,7 @@ let fixedResult='';
 let currentDisplay;
 let operatorActive = false;
 let currentOperator;
-let buildUpAudio = new Audio('Reveal Sound Effect.mp3');
+let buildUpAudio = new Audio('reveal.mp3');
 let jumpAudio = new Audio('jump.mp3');
 let popAudio = new Audio('pop.mp3');
 let paperAudio = new Audio('paper.mp3');
@@ -214,11 +214,11 @@ function divide() {
 
 function shouldntHaveDoneThat() {
     jumpAudio.play();
-    //buildUpAudio.play();
+    buildUpAudio.play();
     calculatorContainer.remove();
     superContainer.remove();
     alphaContainer.style.backgroundColor = "black";
-    memeHeading.innerHTML = ("y̵͓̐̈̚ ̵̛̲͓̀͑ơ̴͈͉̌͐̕ ̷̰̫̼̕ͅu̴͖̮̔́ ̷̨̫̘͇̽ ̴̠̦̘̆̓̀s̷̤̐̔̈͠ ̶͍̦̗͆̅h̴̩͒̄͑͠ ̸͉̺̘͎̓̀̂́ȏ̶̹̦̩͘ ̸̜͐͜ǔ̶̡̠̳͖ ̵̢͍̺͛̀l̶̲̔̈́̋͝ ̴͗́̾̔͜d̵͍̦͎͌͗̈́͜ ̵͎͓̗̟̂n̵͇̩̔̎̌̆ ̶͓͎͔̅͗̇̃t̶̨͚̊̆̕ ̴̨̘̈͌ ̷̮̫̐͊h̴̺͌ ̵̙͉̟̖͋å̶̡̖̻͗̉ ̴̟̣̥̈́̓̌͠v̸̠̍ ̵͙̻͓́͊͘è̷̙͐͑ ̶͎͔̺͎͌͊͆͠ ̷̥̗̈́́͒d̷̨̰̭͔͋̿ ̸͇̈́̚ŏ̵͖̥̝̞͑ ̵̭̪̰̯̃ǹ̴̨͙̻̗ ̸̥̘̎͗ͅė̸̥̻͓͔̐̀ ̸̗͖̼̱͘͠ ̴̧͕̜͒̑t̷͇͙͈͘ ̴̳̊͑h̵̝̯͗ ̶̬̪̒͗̓a̶̮̤̥̎́̓ ̶̧͐̂ţ̴̨̪̰̝̦̟͇̳̬̣̣̮͐̓̿͐́̐̔͐̿́̆̽̽̉͜͝");
+    memeHeading.innerHTML = ("You shouldn't have done that.");
     alphaContainer.style.display = "flex";
     alphaContainer.style.justifyContent = "center";
     alphaContainer.style.alignItems = "center";
